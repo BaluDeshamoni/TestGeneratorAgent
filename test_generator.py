@@ -4,7 +4,7 @@ class OpenRouterClient:
     """OpenRouter API client using OpenAI-compatible SDK (>=1.0.0)."""
     def __init__(self):
         self.client = openai.OpenAI(
-            api_key="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",
+            api_key="API-KEY",
             base_url="https://openrouter.ai/api/v1"
         )
 
