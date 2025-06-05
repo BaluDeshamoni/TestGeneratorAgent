@@ -21,7 +21,7 @@ The following test case has issues:
 Issues:
 {issue_summary}
 
-Modify the test case to fix failures and cover uncovered lines. Return the updated test code.
+Modify the test case to fix failures and cover uncovered lines. Return the updated test code in a single block wrapped in ```python ... ```.
 """
     try:
         new_test_code = openrouter_client.generate(prompt)

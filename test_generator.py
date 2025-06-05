@@ -1,10 +1,11 @@
 import openai
+import re
 
 class OpenRouterClient:
     """OpenRouter API client using OpenAI-compatible SDK (>=1.0.0)."""
     def __init__(self):
         self.client = openai.OpenAI(
-            api_key="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",
+            api_key="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",
             base_url="https://openrouter.ai/api/v1"
         )
 
@@ -18,7 +19,14 @@ class OpenRouterClient:
                 ],
                 max_tokens=2000
             )
-            return response.choices[0].message.content
+            # Extract only the Python code block from the response
+            content = response.choices[0].message.content
+            # Use regex to find code between ```python and ```
+            match = re.search(r'```python\n(.*?)\n```', content, re.DOTALL)
+            if match:
+                return match.group(1).strip()
+            else:
+                raise ValueError("No Python code block found in API response")
         except Exception as e:
             raise RuntimeError(f"OpenRouter API error: {str(e)}")
 
@@ -38,6 +46,6 @@ Generate pytest test cases to achieve at least 80% code coverage. Include:
 - Tests for all functions and classes.
 - Mock dependencies using unittest.mock.
 - Handle edge cases and exceptions.
-Return the test code in a single block.
+Return the test code in a single block wrapped in ```python ... ```.
 """
     return openrouter_client.generate(prompt)

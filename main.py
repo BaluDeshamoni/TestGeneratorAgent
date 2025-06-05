@@ -6,7 +6,7 @@ from test_refiner import refine_tests
 
 def main():
     repo_path = "my-python-project/src"
-    max_iterations = 2
+    max_iterations = 3
     
     # Step 1: Scan files
     files = scan_files(repo_path)
