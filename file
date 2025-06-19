@@ -1,5 +1,0 @@
-prov-key=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
-
-api-key=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
-
-- For importing function and classes use src as root folder for example to import a file use `from src import filename`
