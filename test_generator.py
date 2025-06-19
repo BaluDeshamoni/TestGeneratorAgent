@@ -5,7 +5,7 @@ class OpenRouterClient:
     """OpenRouter API client using OpenAI-compatible SDK (>=1.0.0)."""
     def __init__(self):
         self.client = openai.OpenAI(
-            api_key="API-KEY",
+            api_key="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",
             base_url="https://openrouter.ai/api/v1"
         )
 
@@ -34,18 +34,18 @@ class OpenRouterClient:
 openrouter_client = OpenRouterClient()
 
 def generate_tests(file_content):
-    """Generate pytest test cases for a Python file."""
+    """Generate high-quality pytest test cases for a Python file."""
     prompt = f"""
+    You are a professional software engineer and QA expert
 Given the following Python code:
 
 ```python
 {file_content}
 ```
 
-Generate pytest test cases to achieve at least 80% code coverage. Include:
+Generate **only** `pytest` test cases to achieve at least 90% code coverage. Include:
 - Tests for all functions and classes.
-- Mock dependencies using unittest.mock.
-- Handle edge cases and exceptions.
+- For importing function and classes use src as root folder for example from src import module
 Return the test code in a single block wrapped in ```python ... ```.
 """
     return openrouter_client.generate(prompt)

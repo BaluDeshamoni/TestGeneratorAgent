@@ -1,7 +1,7 @@
 import os
 from test_generator import openrouter_client
 
-def refine_tests(test_file, issues):
+def refine_tests(test_file,src_file, issues):
     """Refine test cases based on issues."""
     with open(test_file, "r", encoding="utf-8") as f:
         test_code = f.read()
@@ -12,7 +12,13 @@ def refine_tests(test_file, issues):
     )
     
     prompt = f"""
-The following test case has issues:
+For the below Python source file:
+
+```python
+{src_file}
+```
+
+The following test cases are written which has issues:
 
 ```python
 {test_code}
@@ -21,7 +27,10 @@ The following test case has issues:
 Issues:
 {issue_summary}
 
-Modify the test case to fix failures and cover uncovered lines. Return the updated test code in a single block wrapped in ```python ... ```.
+Only Modify the test case which is causing the issue , fix failures and cover uncovered lines.
+Generate **only** `pytest` test cases
+For importing function and classes use src as root folder for example from src import module
+Return the updated test code in a single block wrapped in ```python ... ```.
 """
     try:
         new_test_code = openrouter_client.generate(prompt)
